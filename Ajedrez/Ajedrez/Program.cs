@@ -5,17 +5,17 @@ namespace CosechaCaballo
 {
     class Program
     {
-        // Movimientos del caballo: clave -> (dx, dy)
+        
         static readonly Dictionary<string, (int dx, int dy)> MOVIMIENTOS = new()
         {
-            {"UL", (-1,  2)}, // arriba izquierda
-            {"UR", ( 1,  2)}, // arriba derecha
-            {"LU", (-2,  1)}, // izquierda arriba
-            {"LD", (-2, -1)}, // izquierda abajo
-            {"RU", ( 2,  1)}, // derecha arriba
-            {"RD", ( 2, -1)}, // derecha abajo
-            {"DL", (-1, -2)}, // abajo izquierda
-            {"DR", ( 1, -2)}  // abajo derecha
+            {"UL", (-1,  2)}, 
+            {"UR", ( 1,  2)}, 
+            {"LU", (-2,  1)}, 
+            {"LD", (-2, -1)}, 
+            {"RU", ( 2,  1)}, 
+            {"RD", ( 2, -1)}, 
+            {"DL", (-1, -2)}, 
+            {"DR", ( 1, -2)}  
         };
 
         static (int x, int y) PosToCoord(string pos)
@@ -28,11 +28,11 @@ namespace CosechaCaballo
             if (col < 'A' || col > 'H')
                 throw new FormatException("Columna inválida: " + col);
 
-            // fila puede ser '1'..'8' (en este problema siempre 1 dígito)
+     
             if (!int.TryParse(pos.Substring(1), out int row) || row < 1 || row > 8)
                 throw new FormatException("Fila inválida en: " + pos);
 
-            return (col - 'A', row - 1); // 0-based
+            return (col - 'A', row - 1); 
         }
 
         static string CoordToPos(int x, int y)
@@ -52,19 +52,19 @@ namespace CosechaCaballo
             Console.WriteLine("Ingrese los movimientos del caballo (ej: DR,RD,LD,...):");
             string movimientosLine = Console.ReadLine() ?? "";
 
-            // Parsear frutos
+            
             var frutos = new Dictionary<(int, int), char>();
             var tokensFrutos = frutosLine.Split(',', StringSplitOptions.RemoveEmptyEntries);
             foreach (var raw in tokensFrutos)
             {
                 var s = raw.Trim();
-                if (s.Length < 3) continue; // ignorar
-                char simbolo = s[^1]; // último char
+                if (s.Length < 3) continue; 
+                char simbolo = s[^1]; 
                 string posStr = s.Substring(0, s.Length - 1);
                 try
                 {
                     var coord = PosToCoord(posStr);
-                    frutos[coord] = simbolo; // si hay colisión, sobrescribe (útil en validaciones)
+                    frutos[coord] = simbolo;
                 }
                 catch (FormatException fe)
                 {
@@ -72,7 +72,7 @@ namespace CosechaCaballo
                 }
             }
 
-            // Posición inicial caballo
+           
             (int x, int y) posCaballo;
             try
             {
@@ -84,7 +84,7 @@ namespace CosechaCaballo
                 return;
             }
 
-            // Movimientos
+            
             var movimientos = movimientosLine.Split(',', StringSplitOptions.RemoveEmptyEntries);
             var recogidos = new List<char>();
 
